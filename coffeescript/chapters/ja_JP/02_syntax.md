@@ -4,7 +4,7 @@
 
 最初にこのセクションを始める前に再確認しておきましょう。CoffeeScriptの文法はしばしばJavaScriptと同じですが拡張ではありません。従っていくらかのJavaScriptのキーワード、例えば`function`や`var`は許されません。文法エラーになります。CoffeeScriptのファイルを書くのであれば純粋にCoffeeScriptである必要があります。2つの言語を混ぜることはできません。
 
-なぜCoffeeScriptは拡張ではないのでしょうか? それはCoffeeScriptプログラムの空白が重要であることが、拡張であることを妨げるからです。その決定が行われてからはチームはあなたもまたそれに完璧に従いJavaScriptのいくつかのキーワードを非推奨として扱うことを、簡潔さの掟とよくあるバグを減らすための努力の名の元に行うことを決定したのです。
+なぜCoffeeScriptは拡張ではないのでしょうか? それはCoffeeScriptプログラムの空白が重要であることが、拡張であることを妨げるからです。その決定が行われてからはチームはあなたもまたそれに完璧に従いJavaScriptのいくつかのキーワードを非推奨として扱うことを、簡潔さの掟とよくあるバグを減らすための努力の名の元に行うよう決定したのです。
 
 メタ的な意味で驚いたのはCoffeeScriptインタプリタ自身が実際にCoffeeScriptで書かれていたことでした。それは卵と鶏のパラドックスがついに解決したかに見えました！
 
@@ -23,66 +23,65 @@
       複数行のコメント。たぶん、ライセンス
     ###
 
-As I briefly alluded to, whitespace is significant in CoffeeScript. In practice, this means that you can replace curly brackets (`{}`) with a tab. This takes inspiration from Python's syntax, and has the excellent side effect of ensuring that your script is formatted in a sane manner, otherwise it won't even compile!
-既に手短に説明しましたが、CoffeeScriptでは空白が重要です。
+既に手短に説明しましたが、CoffeeScriptでは空白が重要です。実際に、これは中括弧(`{}`)をタブで置き換えられることを意味します。これはPythonの文法からインスピレーションを得ており、あなたのスクリプトが同じ様式で整形される保障という素敵な副作用を持っています。そうしなければコンパイルもできません！
 
 
-##Variables & Scope
+##変数とスコープ
 
-CoffeeScript fixes one of the major bugbears with JavaScript, global variables. In JavaScript, it's all too easy to accidentally declare a global variable by forgetting to include `var` before the variable assignment. CoffeeScript solves this by simply removing global variables. Behind the scenes, CoffeeScript wraps up scripts with an anonymous function, keeping the local context, and automatically prefixes all variable assignments with `var`. For example, take this simple variable assignment in CoffeeScript:
+CoffeeScriptはJavaScriptの主な問題の1つを直しました。グローバル変数です。JavaScriptでは変数宣言の前に`var`を置くのを忘れてしまったために不本意にグローバル変数を宣言してしまうことが頻繁でした。CoffeeScriptはこれを単純にグローバル変数を無くすことで解決しています。裏側ではCoffeeScriptはスクリプトを無名関数でラップすることでローカルコンテキストを保持しています。そして自動的に全ての変数宣言に`var`を付けています。例えば次の単純な変数の割当をご覧下さい。
 
 <span class="csscript"></span>
 
     myVariable = "test"
 
-Notice the dark grey box in the top right of the code example above. Give that a click, and the code will toggle between CoffeeScript and the compiled JavaScript. This is rendered right inside the page at runtime, so you're assured the compiled output is accurate. 
+上のコード例の右上にダークグレーの箱があるのに気付かれますでしょうか。それをクリックしてください。コードはCoffeeScriptとコンパイルされたJavaScriptとでスィッチします。これはページの丁度中で実行時に描かれています。そのためコンパイルされた出力が正しいことを確認できるでしょう。
 
-As you can see, the variable assignment is kept completely local, it's impossible to accidentally create a global variable. CoffeeScript actually takes this a step further, and makes it difficult to shadow a higher-level variable. This goes a great deal to prevent some of the most common mistakes developers make in JavaScript.
+ご覧になられたとおり、変数の割当は完全にローカルに保持されます。グローバル変数を事故で作ることは不可能です。CoffeeScriptは実際にこのステップを延長し、高いレベルの変数を隠すことを難しくしています。このことがJavaScriptにおいて開発者が最も一般的に行ってしまう誤りのいくつかを防ぐ良い取り決めとなっています。
 
-However, sometimes it's useful to create global variables. You can either do this by directly setting them as properties on the global object (`window` in browsers), or with the following pattern:
+しかしながら、時々、グローバル変数を作ることは便利な事です。グローバルオブジェクト(ブラウザでは`window`)のプロパティとして直接設定するか、次のパターンを用いることで可能です。
 
 <span class="csscript"></span>
 
     exports = this
     exports.MyVariable = "foo-bar"
     
-In the root context, `this` is equal to the global object, and by creating a local `exports` variable you're making it really obvious to anyone reading your code exactly which global variables a script is creating. Additionally, it paves the way for CommonJS modules, which we're going to cover later in the book. 
+rootコンテキストでは`this`はグローバルオブジェクトに等しくなります。`exports`という名の変数を作成することで、あなたのコードを読む誰にとってもスクリプトがどんなグローバル変数を作っているかが明らかになるでしょう。加えて、CommonJSモジュールについて可能とします。この本では後でその事についてもカバーします。
 
-##Functions
+##関数
 
-CoffeeScript removes the rather verbose `function` statement, and replaces it with a thin arrow: `->`. Functions can be one liners or indented on multiple lines. The last expression in the function is implicitly returned. In other words, you don't need to use the `return` statement unless you want to return earlier inside the function. 
+CoffeeScriptはとても冗長なfunction文を削除しました。そしてそれを細い矢印:`->`で置き換えました。関数は1行でも良いし、インデントを行って複数行記述も可能です。関数の最後の式が暗黙的に返り値となります。つまり`return`文を使う必要がありません。関数の途中で返り値を返したい場合には使うことも可能です。
     
-With that in mind, let's take a look at an example:
+そのことを頭に入れて、次の例を見てみましょう:
     
 <span class="csscript"></span>
 
     func = -> "bar"
 
-You can see in the resultant compilation, the `->` is turned into a `function` statement, and the `"bar"` string is automatically returned.
+コンパイルの結果が、`->`が`function`になるのが見えると思います。そして`"bar"`という文字列が自動的にreturnされるのもおわかりでしょうか。
 
-As mentioned earlier, there's no reason why we can't use multiple lines, as long as we indent the function body properly.
+先程お話しましたとおり、複数行を問題無く使うことができます。ただし適切に関数の本体をインデントする必要があります。
 
 <span class="csscript"></span>
 
     func = ->
-      # An extra line
+      # 余分な行
       "bar"
       
-###Function arguments
+###関数引数
 
-How about specifying arguments? Well, CoffeeScript lets you do that by specifying arguments in parentheses before the arrow.
+引数はどうやって指定するのでしょうか？CoffeeScriptでは矢印の前で、括弧の中に引数を指定します。
 
 <span class="csscript"></span>
 
     times = (a, b) -> a * b
 
-CoffeeScript supports default arguments too, for example:
+CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 <span class="csscript"></span>
 
     times = (a = 1, b = 2) -> a * b
     
-You can also use splats to accept multiple arguments, denoted by `...`
+また可変長引数を利用するのにスプラットを用いることも可能です。`...`の名称です。
 
 <span class="csscript"></span>
 
@@ -91,7 +90,7 @@ You can also use splats to accept multiple arguments, denoted by `...`
       nums.forEach (n) -> result += n
       result
 
-In the example above, `nums` is an array of all the arguments passed to the function. It's not an `arguments` object, but rather a real array, so you don't need to concern yourself with `Array.prototype.splice` or `jQuery.makeArray()` if you want to manipulate it. 
+上の例では`nums`は関数に渡された全ての引数の配列です。これは`arguments`オブジェクトではありません。そうではなく本物の配列です。だからこれを取り扱うのに`Array.prototype.splice`や`jQuery.makeArray()`の使用をあなた自身で考慮する必要がありません。
 
 <span class="csscript"></span>
 
@@ -99,64 +98,64 @@ In the example above, `nums` is an array of all the arguments passed to the func
       events.splice(1, 0, this)
       this.constructor.trigger.apply(events)
 
-###Function invocation
+###関数の実行
 
-Functions can be invoked exactly as in JavaScript, with parens `()`, `apply()` or `call()`. However, like Ruby, CoffeeScript will automatically call functions if they are invoked with at least one argument.
+関数はJavaScriptと全く同じように実行することが可能です。括弧`()`を付けたり、`apply()`を適用したり、`call()`を呼んだりです。しかしRubyのように、CoffeeScriptは関数が最低一つの引数と実行されれば、自動的に関数を呼出します。
 
 <span class="csscript"></span>
 
     a = "Howdy!"
     
     alert a
-    # Equivalent to:
+    # 次と同じ
     alert(a)
 
     alert inspect a
-    # Equivalent to:
+    # 次と同じ
     alert(inspect(a))
     
-Although parenthesis is optional, I'd recommend using it if it's not immediately obvious what's being invoked, and with which arguments. In the last example, with `inspect`, I'd definitely recommend wrapping at least the `inspect` invocation in parens.
+括弧は必須ではありませんが、直ぐに何がどんな引数と実行されるか明らかに判る場合以外は使用することをお勧めします。`inspect`を用いる最後の例では、私は最低でも`inspect`の実行には括弧を付けることを強くお勧めします。
 
 <span class="csscript"></span>
 
     alert inspect(a)
 
-If you don't pass any arguments with an invocation, CoffeeScript has no way of working out if you intend to invoke the function, or just treat it like a variable. In this respect, CoffeeScript's behavior differs from Ruby which always invokes references to functions, and is more similar to Python's. This has been the source of a few errors in my CoffeeScript programs, so it's worth keeping an eye out for cases where you intend to call a function without any arguments, and include parenthesis.
+もし実行時に1つも引数を渡さない場合、CoffeeScriptはあなたが関数の実行を意味しているのか、変数として取り扱って欲しいのか理解できません。この事実より、CoffeeScriptの処理は常に関数参照を実行するRubyとは異なり、Pythonにより近いものとなっています。このことが私のCoffeeScriptプログラムではいくつかのエラーの元となりました。従ってあなたが引数無しで関数を起動する場合には十分に気を付けて括弧を付けましょう。
 
-###Function context
+###関数コンテキスト
 
-Context changes are rife within JavaScript, especially with event callbacks, so CoffeeScript provides a few helpers to manage this. One such helper is a variation on `->`, the fat arrow function: `=>`
+コンテキストの変化はJavaScriptにおいて嫌なものです。特にイベントコールバックにおいては顕著です。そのためCoffeeScriptではこれを管理するためにいくらか助けとなるものを用意しました。そのようなヘルパーの一つが`->`のバリエーションである太った矢印(ファットアロー)`=>`の関数です。
 
-Using the fat arrow instead of the thin arrow ensures that the function context will be bound to the local one. For example:
+細い矢印の代わりにファットアローを用いることで、関数のコンテキストがローカルのものに紐付けられることを確実にします。以下の例をご覧下さい。
 
 <span class="csscript"></span>
 
     this.clickHandler = -> alert "clicked"
     element.addEventListener "click", (e) => this.clickHandler(e)
 
-The reason you might want to do this, is that callbacks from `addEventListener()` are executed in the context of the `element`, i.e. `this` equals the element. If you want to keep `this` equal to the local context, without doing a `self = this` dance, fat arrows are the way to go. 
+これを行いたい理由は`addEventListener()`からのコールバックは`element`のコンテキストにて実行されるからです。すなわち`this`は`element`に等しくなります。もしあなたが`self = this`のような面倒をせずに`this`をローカルコンテキストに保持したい場合にはファットアローを用います。
 
-This binding idea is a similar concept to jQuery's [`proxy()`](http://api.jquery.com/jQuery.proxy/) or [ES5's](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind) `bind()` functions. 
+このバインディングのアイデアはjQueryの[`proxy()`](http://api.jquery.com/jQuery.proxy/)や[ES5](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind)の`bind()`関数と似たコンセプトです。
 
-##Object literals & array definition
+##オブジェクトの構文と配列の定義
 
-Object literals can be specified exactly as in JavaScript, with a pair of braces and key/value statements. However, like with function invocation, CoffeeScript makes the braces optional. In fact, you can also use indentation and new lines instead of comma separation.  
+オブジェクト構文はJavaScriptと全く同じように指定可能です。中括弧のペアやキー/バリューの文を使います。しかし関数実行と同じように、CoffeeScriptは中括弧を省略可能です。実際に、インデントをまた使うことが可能ですし、改行をカンマの変わりに用いることができます。
 
 <span class="csscript"></span>
 
     object1 = {one: 1, two: 2}
 
-    # Without braces
+    # 中括弧無しで
     object2 = one: 1, two: 2
     
-    # Using new lines instead of commas
+    # 改行をカンマの変わりにする
     object3 = 
       one: 1
       two: 2
     
     User.create(name: "John Smith")
 
-Likewise, arrays can use whitespace instead of comma separators, although the square brackets (`[]`) are still required.
+同様に、配列は空白をカンマの代わりに区切に用いることができます。ただし角括弧(`[]`)は必須です。
 
 <span class="csscript"></span>
 
@@ -170,11 +169,11 @@ Likewise, arrays can use whitespace instead of comma separators, although the sq
 
     array3 = [1,2,3,]
     
-As you can see in the example above, CoffeeScript has also stripped the trailing comma in `array3`, another common source of cross-browser errors. 
+上の`array3`の例でわかるようにCoffeeScriptは最後のカンマ(`trailing comma`)を取り除いています。これもまた良くあるクロスブラウザでのエラーの元です。
 
-##Flow control
+##フローコントロール
 
-The convention of optional parentheses continues with CoffeeScript's `if` and `else` keywords.
+CoffeeScriptの括弧が必須でないというお約束は`if`と`else`キーワードでも続きます。
 
 <span class="csscript"></span>
 
@@ -183,48 +182,49 @@ The convention of optional parentheses continues with CoffeeScript's `if` and `e
       
     if true != true then "Panic"
     
-    # Equivalent to:
+    # 以下と同じ意味
     #  (1 > 0) ? "Ok" : "Y2K!"
     if 1 > 0 then "Ok" else "Y2K!"
     
-As you can see above, if the `if` statement is on one line, you'll need to use the `then` keyword, so CoffeeScript knows when the block begins. Conditional operators (`?:`) are not supported, instead you should use a single line `if/else` statement.
+上でわかりますように、もし`if`文が1行であるなら`then`キーワードを用いる必要があります。そうすることでCoffeeScriptはいつブロックが始まるか理解できます。条件演算子(`?:`)はサポートされていません。そのかわりに1行で`if/else`文を用いなければいけません。
 
-CoffeeScript also includes a Ruby idiom of allowing suffixed `if` statements.
+CoffeeScriptはまたRubyの慣用句である後置`if`文を利用可能です。
 
 <span class="csscript"></span>
 
     alert "It's cold!" if heat < 5
 
-Instead of using the exclamation mark (`!`) for negation, you can also use the `not` keyword - which can sometimes make your code more readable as exclamation marks can be easy to miss.
+否定にびっくりマーク(`!`)を用いる代わりに、`not`キーワードを用いることが可能です。それを用いることでコードをより読み易くすることが可能です。びっくりマークは簡単に見落としますから。
 
 <span class="csscript"></span>
 
     if not true then "Panic"
     
-In the example above, we could also use the CoffeeScript's `unless` statement, the opposite of `if`.
+上の例ではCoffeeScriptの`unless`文を`if`の反対として使用可能です。
 
 <span class="csscript"></span>
 
     unless true
       "Panic"
 
-In a similar fashion to `not`, CoffeeScript also introduces the `is` statement, which translates to `===`.
+`not`と似た感覚で、CoffeeScriptは`is`文も持っています。`===`に変換されます。
 
 <span class="csscript"></span>
 
     if true is 1
       "Type coercion fail!"
       
-As an alternative to `is not`, you can use `isnt`.
+`is not`の代わりに、`isnt`を使用可能です。
 
     if true isnt true
       alert "Opposite day!"
 
 You may have noticed in the examples above, that CoffeeScript is converting `==` operators into `===` and `!=` into `!==`. This is one of my favorite features to the language, and yet one of the most simple. What's the reasoning behind this? Well frankly JavaScript's type coercion is a bit odd, and its equality operator coerces types in order to compare them, leading to some confusing behaviors and the source of many bugs. There's a longer discussing on this topic in chapter 7.
+上の例でお気付きでしょうが、CoffeeScriptは`==`演算子を`===`に変換し、`!=`を`!==`に変換します。これはこの言語の私の好きな最もシンプルな機能の1つです。この考えの背景にあるものは何でしょうか？率直に言ってJavaScriptの型変換は少し変です。そしてそれらの比較演算子は比較のために型変換を強制します。そのことが理解し難い挙動に繋り、ひいては多くのバグの元となります。このトピックについては第7章でより長い議論を行います。
     
-##String interpolation
+##文字列への挿入
 
-CoffeeScript brings Ruby style string interpolation to JavaScript. Double quotes strings can contain `#{}` tags, which contain expressions to be interpolated into the string. 
+CoffeeScriptはRuby式の文字列への挿入をJavaScriptに対し追加しています。ダブルクォートで括った文字列に対しては`#{}`タグを含むことができます。その中に文字列に対して挿入される式を記述します。
 
 <span class="csscript"></span>
 
@@ -234,45 +234,45 @@ CoffeeScript brings Ruby style string interpolation to JavaScript. Double quotes
                 Bridgekeeper: Wrong!
                 "
 
-As you can see in the example above, multiline strings are also allowed, without having to prefix each line with a `+`:
+上の例を見てわかります通り、複数行に渡る文字列もまた可能です。各行に`+`を置く必要はありません。
 
-##Loops and Comprehensions
+##ループと内包表記
 
-Array iteration in JavaScript has a rather archaic syntax, reminiscent of an older language like C rather than a modern object orientated one. The introduction of ES5 improved that situation somewhat, with the `forEach()` function, but that still requires a function call every iteration and is therefore much slower. Again, CoffeeScript comes to the rescue, with a beautiful syntax:
+JavaScriptの配列の繰り返しはとても古風な文法でした。C言語のようなより古い言語を思い出させ、現在のオブジェクト指向言語とは異なります。ES5の`forEach()`の登場により状況はいくらか改善されました。しかしそれでも毎回関数呼出を必要とし、そのために遅いものとなっています。再びCoffeeScriptが美しい文法でその助けとなります。
 
 <span class="csscript"></span>
 
     for name in ["Roger", "Roderick", "Brian"]
       alert "Release #{name}"
       
-If you need the current iteration index, just pass an extra argument:
+もし繰り返しのインデックスが必要なら、もう1つの引数を渡すだけです。
       
 <span class="csscript"></span>
 
     for name, i in ["Roger the pickpocket", "Roderick the robber"]
       alert "#{i} - Release #{name}"
 
-You can also iterate on one line, using the postfix form. 
+後置形式を用いることで1行で繰返すことも可能です。
 
 <span class="csscript"></span>
 
     release prisoner for prisoner in ["Roger", "Roderick", "Brian"]
     
-As with Python comprehensions, you can filter them:
+Pythonの内包表記のように、フィルタリングを行うことも可能です。
 
 <span class="csscript"></span>
 
     prisoners = ["Roger", "Roderick", "Brian"]
     release prisoner for prisoner in prisoners when prisoner[0] is "R" 
 
-You can also use comprehensions for iterating over properties in objects. Instead of the `in` keyword, use `of`.
+内包表記を用いてオブジェクトのプロパティについて繰り返しを行うことも可能です。`in`キーワードの代わりに`of`を使用して下さい。
 
 <span class="csscript"></span>
 
     names = sam: seaborn, donna: moss
     alert("#{first} #{last}") for first, last of names
 
-The only low-level loop that CoffeeScript exposes is the `while` loop. This has similar behavior to the `while` loop in pure JavaScript, but has the added advantage that it returns an array of results, i.e. like the `Array.prototype.map()` function.
+CoffeeScriptが持つローレベルなループは`while`のみです。JavaScriptの`while`と同じような動作をします。しかし追加の利点として結果の配列を返します。つまり`Array.prototype.map()`関数と同じようにです。
 
 <span class="csscript"></span>
 
@@ -280,73 +280,73 @@ The only low-level loop that CoffeeScript exposes is the `while` loop. This has 
     minstrel = while num -= 1
       num + " Brave Sir Robin ran away"
 
-##Arrays
+##配列
 
-CoffeeScript takes inspiration from Ruby when it comes to array slicing by using ranges. Ranges are created by two numerical values, the first and last positions in the range, separated by `..` or `...`. If a range isn't prefixed by anything, CoffeeScript expands it out into an array.
+CoffeeScriptは配列の範囲(region)を用いたスライスについてRubyからヒントを得ています。範囲は2つの数値から作られます。最初と最後の位置を示す2つの数値は`..`か`...`で区切られます。もし範囲の前に何も無い場合にはCoffeeScriptはそれを配列に変換します。
 
 <span class="csscript"></span>
 
     range = [1..5]
     
-If, however, the range is specified immediately after a variable, CoffeeScript converts it into a `slice()` method call. 
+しかし、もし範囲が変数の直後に置かれたならCoffeeScriptはそれを`slice()`メソッドの呼出に変換します。
     
 <span class="csscript"></span>
 
     firstTwo = ["one", "two", "three"][0..1]
     
-In the example above, the range returns a new array, containing only the first two elements of the original array. You can also use the same syntax for replacing an array segment with another array.
+上の例では範囲は新しい配列を返します。元の配列の最初の2つの要素のみを持つ配列です。同じ文法を配列の一部を他の配列で置換することにも使えます。
 
 <span class="csscript"></span>
 
     numbers = [0..9]
     numbers[3..5] = [-3, -4, -5]
 
-What's neat, is that JavaScript allows you to call `slice()` on strings too, so you can use ranges with string to return a new subset of characters. 
+便利なのはJavaScriptでは`slice()`を文字列に対しても呼ぶことが可能なことです。そのため範囲を文字列に対して使用することで部分文字列を返すことが可能です。
     
 <span class="csscript"></span>
 
     my = "my string"[0..2]
 
-Checking to see if a value exists inside an array is always a bore in JavaScript, particular as `indexOf()` doesn't yet have full cross-browser support (IE, I'm talking about you). CoffeeScript solves this with the `in` operator, for example.
+JavaScriptでは配列の中に値が存在するか確認することはとても面倒でした。特に`indexOf()`が全てのブラウザ間においてサポートされている訳ではなかったからです。(IE、君のことを言っているんだよ)。CoffeeScripitはこれを`in`演算子で解決します。次の例をご覧下さい。
 
 <span class="csscript"></span>
 
     words = ["rattled", "roudy", "rebbles", "ranks"]
     alert "Stop wagging me" if "ranks" in words 
 
-##Aliases & the Existential Operator
+##エイリアス(別名)と存在確認演算子
 
-CoffeeScript includes some useful aliases to save some typing. One of which is `@`, which is an alias for `this`.
+CoffeeScriptはいくつかの便利なエイリアスをタイピングの量を減らすために利用できます。そのうちの1つは`@`です。これは`this`のエイリアスです。
 
 <span class="csscript"></span>
 
     @saviour = true
     
-Another is `::`, which is an alias for `prototype`
+もう1つは`::`です。これは`prototype`の別名です。
 
 <span class="csscript"></span>
 
     User::first = -> @records[0]
     
-Using `if` for `null` checks in JavaScript is common, but has a few pitfalls in that empty strings and zero are both coerced into `false`, which can catch you out. CoffeeScript existential operator `?` returns true unless a variable is `null` or `undefined`, similar to Ruby's `nil?`. 
+JavaScriptでは`if`を`null`チェックに用いることは普通です。しかし空文字列と0が共に`false`に変換されることが落とし穴として存在し、あなたを陥れます。CoffeeScriptの存在確認演算子である`?`は変数が`null`でないか、`undefined`でなければtrueを返します。Rubyの`nil?`と同様です。
 
 <span class="csscript"></span>
 
     praise if brian?
     
-You can also use it in place of the `||` operator:
+これは`||`演算子の代わりにも使えます。
 
 <span class="csscript"></span>
 
     velocity = southern ? 40
     
-If you're using a `null` check before accessing a property, you can skip that by placing the existential operator right before it. This is similar to Active Support's [`try`](http://guides.rubyonrails.org/active_support_core_extensions.html#try) method. 
+もし`null`チェックをプロパティにアクセスする前に行う場合、存在確認演算子をその前に置くだけでスキップすることが可能です。これはActive Supportの[`try`](http://guides.rubyonrails.org/active_support_core_extensions.html#try)メソッドに似ています。
 
 <span class="csscript"></span>
 
     blackKnight.getLegs()?.kick()
     
-Similarly you can check that a property is actually a function, and callable, by placing the existential operator right before the parens. If the property doesn't exist, or isn't a function, it simply won't get called. 
+同様に、プロパティが実際に関数であり呼出可能かチェックすることが括弧の直前に存在確認演算子を置くことで可能です。もしプロパティが存在しないか、関数ではない場合、呼出は行われません。
 
 <span class="csscript"></span>
 
