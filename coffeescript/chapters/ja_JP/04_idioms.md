@@ -2,12 +2,10 @@
 
 #CoffeeScriptに共通なイディオム
 
-Every language has a set of idioms and practices, and CoffeeScript is no exception. This chapter will explore those conventions, and show you some JavaScript to CoffeeScript comparisons so you can get a practical sense of the language. 
 各言語には慣用句や慣習があります。CoffeeScriptも例外ではありません。この章ではそれらの規約を説明し、JavaScriptとCoffeeScriptの比較をいくつかご紹介することでこの言語の実践的なセンスを得て頂きます。
 
 ##Each
 
-In JavaScript to iterate over every item in an array, we could either use the newly added [`forEach()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/foreach) function, or an old C style `for` loop. If you're planning to use some of JavaScript's latest features introduced in ECMAScript 5, I advise you also include a [shim](https://github.com/kriskowal/es5-shim) in the page to emulate support in older browsers.
 JavaScriptでは配列の全てのアイテムに対し繰返しを行う場合、新しく追加された[`forEach()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/foreach)関数を用いるか、古いC言語のスタイルである`for`ループを用いることができました。もしECMAScript 5で紹介されたJavaScriptの最新の機能を用いる計画でしたら、私は古いブラウザもサポートするために[shim](https://github.com/kriskowal/es5-shim)をページに入れておくことをお勧めします。
     
     for (var i=0; i < array.length; i++)
@@ -17,19 +15,17 @@ JavaScriptでは配列の全てのアイテムに対し繰返しを行う場合�
       myFunction(item)
     });
 
-Although the `forEach()` syntax is much more succinct and readable, it suffers from the drawback that the callback function will be invoked every iteration of the array, and is therefore much slower than the equivalent `for` loop. Let's see how it looks in CoffeeScript.
-`forEach()`の文法は簡潔で読み易いものですが、配列の個々の繰り返しにおいてコールバック関数が実行されるための不利益を被ります。従って同等な`for`ループに比べると遅くなります。CoffeeScriptではどうなるか見てみましょう。
+`forEach()`の文法は簡潔で読み易いものですが、配列の個々の繰り返しにおいてコールバック関数が実行されるための不利益を被ります。つまり同等な`for`ループに比べると遅くなります。CoffeeScriptではどうなるか見てみましょう。
 
 <span class="csscript"></span>
       
     myFunction(item) for item in array
     
-It's a readable and concise syntax, I'm sure you'll agree, and what's great is that it compiles to a `for` loop behind the scenes. In other words CoffeeScript's syntax offers the same expressiveness as `forEach()`, but without the speed and shimming caveats. 
-読み易く簡潔な文法です。あなたも同意されることを疑いません。そしてこれの良いところは裏側では`for`ループにコンパイルされることです。つまりCoffeeScriptの文法は`forEach()`と同じ表現力を持ちながら、パフォーマンスやshimmingに対する警告がありません。
+読み易く簡潔な文法です。あなたも同意されることを疑いません。そしてこれの良いところは裏側では`for`ループにコンパイルされることです。つまりCoffeeScriptの文法は`forEach()`と同じ表現力を持ちながら、パフォーマンスやshimの必要性といった警告がありません。
     
 ##Map
 
-As with `forEach()`, ES5 also includes a native map function that has a much more succinct syntax than the classic `for` loop, namely [`map()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map). Unfortunately it suffers from much the same caveats that `forEach()` does, its speed is greatly reduced due to the function calls.
+`forEach()`と同じように、ES5は自然なmap関数も持っています。以前の`for`ループに比べより簡潔な文法を持っています。すなわち[`map()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map)です。残念なことにこれも`forEach()`と同じ警告を受けています。実行速度が関数呼出のために大きく劣っているのです。
 
     var result = []
     for (var i=0; i < array.length; i++)
@@ -39,15 +35,15 @@ As with `forEach()`, ES5 also includes a native map function that has a much mor
       return item.name;
     });
 
-As we covered in the syntax chapter, CoffeeScript's comprehensions can be used to get the same behavior as `map()`. Notice we're surrounding the comprehension with parens, which is **absolutely critical** in ensuring the comprehension returns what you'd expect, the mapped array. 
+文法の章で説明したとおり、CoffeeScriptの内包表記は`map()`と同じ処理を行うことが可能です。内包表記を括弧で囲んでいることに注意して下さい。それはあなたが期待したmapを実行した結果配列を得ることを確実にするのに**とても重要**です。
 
 <span class="csscript"></span>
 
     result = (item.name for item in array)
 
-##Select
+##選択
 
-Again, ES5 has a utility function [`filter()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/filter) for reducing arrays:
+同様に、ES5は配列を縮約するのに便利な関数、[`filter()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/filter)を持っています。
     
     var result = []
     for (var i=0; i < array.length; i++)
@@ -58,14 +54,14 @@ Again, ES5 has a utility function [`filter()`](https://developer.mozilla.org/en/
       return item.name == "test"
     });
 
-CoffeeScript's basic syntax uses the `when` keyword to filter items with a comparison. Behind the scenes a `for` loop is generated. The whole execution is performed in an anonymous function to ward against scope leakage and variable conflict. 
+CoffeeScriptの基本的文法は`when`キーワードをアイテムを比較しながらフィルタリングするのに用います。裏側では`for`ループが生成されています。実行の全体は無名関数の中で行なわれ、スコープが漏れることや変数名の衝突を防ぎます。
 
 <span class="csscript"></span>
 
     result = (item for item in array when item.name is "test")
 
-Don't forgot to include the parens, as otherwise `result` will be the last item in the array. 
-CoffeeScript's comprehensions are so flexible that they allow you to do powerful selections as in the following example:
+括弧を絶対に忘れないで下さい。でなければ`result`は配列の最後の要素になるでしょう。
+CoffeeScriptの内包表記はとても自由度が高く次の例のようにとても強力な選択を行うことを可能にします。
 
 <span class="csscript"></span>
 
@@ -73,10 +69,10 @@ CoffeeScript's comprehensions are so flexible that they allow you to do powerful
     failed = []
     (if score > 60 then passed else failed).push score for score in [49, 58, 76, 82, 88, 90]
     
-    # Or
+    # または
     passed = (score for score in scores when score > 60)
     
-If comprehensions get too long, you can split them onto multiple lines.
+もし内包表記が長すぎる場合には複数行に分けることが可能です。
 
 <span class="csscript"></span>
 
@@ -85,61 +81,60 @@ If comprehensions get too long, you can split them onto multiple lines.
     for score in [49, 58, 76, 82, 88, 90]
       (if score > 60 then passed else failed).push score
 
-##Includes
+##含む
 
-Checking to see if a value is inside an array is typically done with `indexOf()`, which rather mind-bogglingly still requires a shim, as Internet Explorer hasn't implemented it. 
+配列の中に値が存在するかを確認するには通常は`indexOf()`を用います。しかしInternet Explorerがそれを実装していないがために、うんざりすることですが今でも代替法が必要です。
 
     var included = (array.indexOf("test") != -1)
 
-CoffeeScript has a neat alternative to this which Pythonists may recognize, namely `in`.
+CoffeeScriptはPythonプログラマなら気付くであろうこれに対する素敵な代替法を持っています。つまり`in`です。
 
 <span class="csscript"></span>
     
     included = "test" in array
 
-Behind the scenes, CoffeeScript is using `Array.prototype.indexOf()`, and shimming if necessary, to detect if the value is inside the array. Unfortunately this  means the same `in` syntax won't work for strings. We need to revert back to using `indexOf()` and testing if the result is negative:
+裏側ではCoffeeScriptは配列の中に値があるかを確認するのに`Array.prototype.indexOf()`を使用しています。そしてもし必要ならその代替を利用しています。残念なことですがこれは同じ`in`という文法が文字列に対しては動作しないことを意味します。`indexOf()`を使う方法に戻って、結果が`-1`でないか確認します。
 
 <span class="csscript"></span>
 
     included = "a long test string".indexOf("test") isnt -1
 
-Or even better, hijack the bitwise operator so we don't have to do a `-1` comparison. 
-
+またはより良い方法として、ビット演算をハイジャックして`-1`との比較をしなくてもすむようにします
 <span class="csscript"></span>
     
     string   = "a long test string"
     included = !!~ string.indexOf "test"
     
-##Property iteration
+##プロパティの繰り返し
 
-To iterate over a bunch of properties in JavaScript, you'd use the `in` operator, for example:
+JavaScriptでプロパティの塊について繰返す場合には`in`演算子を用いました。次の例をご覧下さい。
 
     var object = {one: 1, two: 2}
     for(var key in object) alert(key + " = " + object[key])
     
-However, as you've seen in the previous section, CoffeeScript has already reserved `in` for use with arrays. Instead, the operator has been renamed `of`, and can be used like thus:
+しかし、前のセクションで見たとおり、CoffeeScriptは既に`in`を配列に用いるのに予約済みです。その代わりに、演算子は`of`と名前を変えこのように使えます。
 
 <span class="csscript"></span>
     
     object = {one: 1, two: 2}
     alert("#{key} = #{value}") for key, value of object
     
-As you can see, you can specify variables for both the property name, and its value; rather convenient.
+ご覧のように、プロパティの名前とその値の両方に変数を指定可能です。より便利になりました。
     
-##Min/Max
+##最小/最大
 
-This technique is not specific to CoffeeScript, but I thought it useful to demonstrate anyway. `Math.max` and `Math.min` take multiple arguments, so you can easily use `...` to pass an array to them, retrieving the maximum and minimum values in the array. 
+このテクニックはCoffeeScript特有のものではありません。しかし便利なのでとにかく紹介してみましょう。`Math.max`と`Math.min`は複数の引数を取ります。そのため`...`を用いることで配列を渡し、配列の中の最大値と最小値を得ることができます。
 
 <span class="csscript"></span>
 
     Math.max [14, 35, -7, 46, 98]... # 98
     Math.min [14, 35, -7, 46, 98]... # -7
     
-It's worth noting that this trick will fail with really large arrays as browsers have a limitation on the amount of arguments you can pass to functions.
+このトリックが本当に大きな配列では失敗してしまうのは仕方がありません。ブラウザは関数に渡せる引数の数に制限があります。
     
-##Multiple arguments
+##複数の引数
 
-In the `Math.max` example above, we're  using `...` to de-structure the array and passing it as multiple arguments to `max`. Behind the scenes, CoffeeScript is converting the function call to use `apply()`, ensuring the array is passed as multiple arguments to `max`. We can use this feature in other ways too, such as proxying function calls:
+上の`Math.max`の例では`...`を使い配列を解体し複数の引数として`max`に渡しました。裏側ではCoffeeScriptは関数呼出を`apply()`を使うように変換し、配列が複数の引数として`max`に渡るようにしています。この機能を他にも使うことが可能です。例えば関数呼出を委任(proxy)するには次のようにします。
 
 <span class="csscript"></span>
 
@@ -147,7 +142,7 @@ In the `Math.max` example above, we're  using `...` to de-structure the array an
       log: ->
         console?.log(arguments...)
       
-Or you can alter the arguments before they're passed onwards:
+または引数をパスする前に変えてしまうことも可能です。
 
 <span class="csscript"></span>
 
@@ -158,13 +153,13 @@ Or you can alter the arguments before they're passed onwards:
         args.unshift(@logPrefix) if @logPrefix
         console?.log(args...)
         
-Bear in mind though, that CoffeeScript will automatically set the function invocation context to the object the function is being invoked on. In the example above, that would be `console`. If you want to set the context specifically, then you'll need to call `apply()` manually. 
+しかし次のことは心に留めておいてください。CoffeeScriptは自動的に関数の実行コンテキストをその関数が実行されるオブジェクトに設定します。上の例では`console`になるでしょう。もし指定したコンテキストを設定したい場合には`apply()`を手動で呼ばなければなりません。
 
 ##And/or
 
-CoffeeScript style guides indicates that `or` is preferred over `||`, and `and` is preferred over `&&`. I can see why, as the former is somewhat more readable. Nevertheless, the two styles have identical results.  
+CoffeeScriptスタイルガイドは`or`は`||`より好ましく、`and`は`&&`より好ましいと指示しています。私はそれが何故だかわかります。前者のほうがより読み易いといったところです。それでもなお2つのスタイルは同じ結果をもたらします。
 
-This preference over more English style code also applies to using `is` over `==` and `isnt` over `!=`.
+このより英語らしいスタイルという優先度は`==`の代わりに`is`、`!=`の代わりに`isnt`ということにも当て嵌ります。
     
 <span class="csscript"></span>
 
@@ -172,21 +167,21 @@ This preference over more English style code also applies to using `is` over `==
     string == string # true
     string is string # true
     
-One extremely nice addition to CoffeeScript is the 'or equals', which is a pattern Rubyists may recognize as `||=`:
+CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これはRuby使いなら`||=`と認識するでしょう。
     
 <span class="csscript"></span>
 
     hash or= {}
     
-If hash evaluates to `false`, then it's set to an empty object. It's important to note here that this expression also recognizes `0`, `""` and `null` as false. If that isn't your intention, you'll need to use CoffeeScript's existential operator, which only gets activated if `hash` is `undefined` or `null`:
+もしhashが`false`と評価されるならそれには空のオブジェクトが代入されます。ここで重要なのはこの式は`0`、`""`、`null`もまたfalseと判定することです。もしそれがあなたの意図することでなければCoffeeScriptの存在確認演算子を用いるべきでしょう。そちらは`hash`が`undefined`であるか`null`である場合のみ作動します。
 
 <span class="csscript"></span>
 
     hash ?= {}
 
-##Destructuring assignments
+##割当の解体
 
-Destructuring assignments can be used with any depth of array and object nesting, to help pull out deeply nested properties.
+割当の解体は任意の深さの配列とオブジェクトのネストに用いられ、奥にネストされたプロパティを取り出すのを手助けします。
 
 <span class="csscript"></span>
 
@@ -194,7 +189,7 @@ Destructuring assignments can be used with any depth of array and object nesting
     { a, b } = someObject
     console.log "a is '#{a}', b is '#{b}'"
     
-This is especially useful in Node applications when requiring modules:
+これはNodeのアプリケーションにおいてモジュールを必要とする場合に特に有効です。
 
 <span class="csscript"></span>
 
@@ -202,37 +197,37 @@ This is especially useful in Node applications when requiring modules:
     
     join('/Users', 'Alex')
 
-##External libraries
+##外部ライブラリ
 
-Using external libraries is exactly the same as calling functions on CoffeeScript libraries; since at the end of the day everything is compiled down to JavaScript. Using CoffeeScript with [jQuery](http://jquery.com) is especially elegant, due to the amount of callbacks in jQuery's API. 
+外部ライブラリを利用することはCoffeeScriptのライブラリの関数を呼ぶのと全く同じです。なぜなら全ては最後にはJavaScriptへとコンパイルされるからです。CoffeeScriptと[jQuery](http://jquery.com)を同時に利用するのは特にエレガントです。jQueryのAPIには大量のコールバックがあるからです。
 
 <span class="csscript"></span>
 
-    # Use local alias
+    # ローカルの別名を使う
     $ = jQuery
 
     $ ->
-      # DOMContentLoaded
+      # DOMコンテンツのロード終了後
       $(".el").click ->
         alert("Clicked!")
     
-Since all of CoffeeScript's output is wrapped in an anonymous function, we can set a local `$` alias for `jQuery`. This will make sure that even if jQuery's no conflict mode is enabled and the `$` re-defined, our script will still function as intended. 
+全てのCoffeeScriptの出力は無名関数にてラップされるため、ローカルの`$`を`jQuery`のエイリアスとして設定可能です。これによりjQueryの衝突回避モードが許可されていて`$`が再定義されていても私達のスクリプトは望んだとおりに機能することを確実にします。
 
-##Private variables
+##プライベート変数
 
-The `do` keyword in CoffeeScript lets us execute functions immediately, a great way of encapsulating scope & protecting variables. In the example below, we're defining a variable `classToType` in the context of an anonymous function which's immediately called by `do`. That anonymous function returns a second anonymous function, which will be ultimate value of `type`. Since `classToType` is defined in a context that no reference is kept to, it can't be accessed outside that scope.
+CoffeeScriptの`do`キーワードは関数を直ぐに実行しますが、スコープをカプセル化し、変数を守るのに最高の方法です。下の例では、`classToType`という変数を無名関数のコンテキストで定義し、`do`により直ぐに実行しています。その無名関数は2つ目の無名関数を返します。
 
 <span class="csscript"></span>
 
-    # Execute function immediately
+    # 関数をすぐに実行する
     type = do ->
       classToType = {}
       for name in "Boolean Number String Function Array Date RegExp Undefined Null".split(" ")
         classToType["[object " + name + "]"] = name.toLowerCase()
       
-      # Return a function
+      # 関数を返す
       (obj) ->
         strType = Object::toString.call(obj)
         classToType[strType] or "object"
 
-In other words, `classToType` is completely private, and can never again be referenced outside the executing anonymous function. This pattern is a great way of encapsulating scope and hiding variables.
+つまり、`classToType`は完全にプライベートで実行中の無名関数の外側からは二度と参照することはできません。このパターンはスコープをカプセル化し、変数を隠すのに最適です。
