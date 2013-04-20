@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="600" height="800" viewBox="0, 0, 600, 800">
+  <g id="coverBackgroundColor">
+    <rect x="0" y="0" width="600" height="800" fill="#EA5F25"/>
+  </g>
+  <g id="ebshelfLogo">
+      <path d="M253.191,677.44 C269.842,687.391 270.659,666.712 282.486,698.653" fill-opacity="0" stroke="#FFFFFF" stroke-width="3.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M273.899,684.511 C273.899,684.511 280.086,682.797 283.434,685.22 C286.783,687.642 288.698,706.326 297.342,708.724 C305.986,711.121 306.627,712.512 310.234,711.545 C313.841,710.577 312.489,708.816 316.535,707.06 C320.581,705.305 328.3,705.397 328.3,705.397 L346.809,707.295 C346.809,707.295 334.663,705.161 326.07,700.229 C317.477,695.297 302.689,680.975 302.689,680.975 C302.689,680.975 299.642,678.418 294.607,674.409 C289.572,670.4 284.854,671.732 284.001,673.399 C283.148,675.066 282.241,675.608 279.634,678.893 C277.027,682.179 273.899,684.511 273.899,684.511 z" fill-opacity="0" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M295.717,709.451 L282.145,716.594" fill-opacity="0" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M283.753,710.522 L289.288,712.665 L289.11,717.13" fill-opacity="0" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M311.431,711.594 L308.574,726.058 L301.431,728.38" fill-opacity="0" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M303.574,733.737 L308.574,725.88 L309.11,731.237" fill-opacity="0" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+	  <text x="300" y="770" font-family="Arial-Black" font-size="32" fill="#FFFFFF" text-anchor="middle">
+      www.ebshelf.com
+    </text>
+ </g>
+ <g id="bookTitle" font-family="AvantGarde" font-weight="bold">
+      <text x="300" y="200" font-size="99" fill="#FFFFFF" text-anchor="middle">ちっちゃい</text><text x="300" y="350" font-size="99" fill="#FFFFFF" text-anchor="middle">CoffeeScript</text><text x="300" y="500" font-size="99" fill="#FFFFFF" text-anchor="middle">の本</text>
+ </g>
+</svg>

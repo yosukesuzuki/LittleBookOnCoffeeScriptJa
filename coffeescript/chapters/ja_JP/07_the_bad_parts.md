@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引に戻る</a></div>
-
 #The Bad Parts: 悪い所
 
 JavaScriptは狡猾な猛獣です。あなたにとって避けるべき部分を知ることは使うべき部分を知ることと同じくらい重要です。孫子は"己の敵を知れ"と言いました。それは完全に私達がこれからこの章で行おうとしていることです。JavaSriptの闇の側面を探検すると、疑うことを知らない開発者を急襲するのに準備万端なモンスター達が潜んでいます。全てを陽の下に晒しましょう。
@@ -42,7 +40,7 @@ CoffeeScriptの文法はJavaScriptの部分集合をカバーするのみです�
 
 CoffeeScriptの変数宣言の例を見てみましょう。
 
-<span class="csscript"></span>
+
 
     outerScope = true
     do ->
@@ -59,7 +57,7 @@ CoffeeScriptの変数宣言の例を見てみましょう。
     
 CoffeeScriptがどのように(`var`を用いて)変数を自動的にそれが最初に使用されたコンテキストで初期化するかご覧下さい。外部の変数を覆い隠すのは無理ですが、それらを参照し、アクセスすることは可能です。これには注意が必要です。深くネストする関数やクラスを書く場合に、不注意で外部の変数の名前を再利用しないように気を付けてください。例えば次の例では不注意でClass関数の`package`変数を上書きしています。
 
-<span class="csscript"></span>
+
 
     package = require('./package')
     
@@ -73,7 +71,7 @@ CoffeeScriptがどのように(`var`を用いて)変数を自動的にそれが�
         
 グローバル変数は時には必要です。作成するには`window`のプロパティとして設定する必要があります。
 
-<span class="csscript"></span>
+
 
       class window.Asset
         constructor: ->
@@ -101,7 +99,7 @@ JavaScriptはセミコロンの使用をソースコード内で強制はしま�
 
 例として`class`という予約語をオブジェクトのプロパティとして利用するとしましょう。CoffeeScriptは次のようになります。
 
-<span class="csscript"></span>
+
 
     myObj = {
       delete: "I am a keyword!"
@@ -121,7 +119,7 @@ CoffeeScriptのパーサはあなたが予約語を使用していることを�
 
 javascriptの弱い等価比較(`==`)は人を混乱させる挙動があり、しばしばバグの温床となっています。下の例は[javascript garden's equality section](http://bonsaiden.github.com/javascript-garden/#types.equality)からの引用ですが、問題についてある深さまで掘り下げています。
 
-<span class="csscript"></span>
+
 
     ""           ==   "0"           // false
     0            ==   ""            // true
@@ -141,7 +139,7 @@ CoffeeScriptではこれを単純に全ての弱い等価比較を厳密なも�
 
 しかし、これはCoffeeScriptで常に型の強制変換を完璧に無視できるということではありません。特にフローコントロールにおける変数の真偽値のチェックにおいて顕著です。空文字列、`null`、`undefined`、それに数値の`0`は`false`に変換されます。
 
-<span class="csscript"></span>
+
 
     alert("空配列")      unless [].length
     alert("空文字列")    unless ""
@@ -149,7 +147,7 @@ CoffeeScriptではこれを単純に全ての弱い等価比較を厳密なも�
     
 もし明示的に`null`と`undefined`をチェックしたい場合には、CoffeeScriptの存在確認演算子を利用可能です。
 
-<span class="csscript"></span>
+
 
     alert("これは呼ばれない") unless ""?
     
@@ -209,7 +207,7 @@ CoffeeScriptはJavaScriptのいくつかの欠点を無くしましたが、他�
 
 しかし`with`のように、`eval()`はコンパイラから手掛かりを失わせます。パフォーマンスを悪くする主な原因です。コンパイラには実行時に中身に何が入っているかは検討もつきません。インライン展開のような最適化を実行することも不可能です。もう1つの憂慮点はセキュリティです。もし精査していない入力を与えれば`eval`は簡単にあなたのコードをインジェクション攻撃に対し無力にします。あなたが`eval`を使用する場合の99%にはより良く、より安全な、(角括弧のような)代替法があります。
 
-<span class="csscript"></span>
+
 
     # やってはいけません
     model = eval(modelName)
@@ -221,7 +219,7 @@ CoffeeScriptはJavaScriptのいくつかの欠点を無くしましたが、他�
 
 `typeof`演算子は恐らく最も大きなJavaScriptの設計上の問題でしょう。なぜなら基本的に完全に壊れているからです。実際にそれの用途は本当に1つしかありません。値が`undefined`であるかチェックすることです。
 
-<span class="csscript"></span>
+
 
     typeof undefinedVar is "undefined"
 
@@ -251,7 +249,7 @@ CoffeeScriptはJavaScriptのいくつかの欠点を無くしましたが、他�
 
 それではJavaScriptにおける型チェックには何を使えるのでしょうか？幸運なことに`Object.prototype.toString()`がここでは救いとなります。この関数を適切なオブジェクトのコンテキストで実行した場合、正しい型を返します。やらねばならぬ事は返り値をマッサージして、`typeof`が本来返すべきだった値のような文字列にすることです。次のコードはjQueryの`$.type`から移植した実装例です。
 
-<span class="csscript"></span>
+
 
     type = do ->
       classToType = {}
@@ -274,7 +272,7 @@ CoffeeScriptはJavaScriptのいくつかの欠点を無くしましたが、他�
     
 もし変数が既に定義済みであるかを調べたいのならば、今でも`typeof`を使用する必要があります。そうしなければ`ReferenceError`を受け取ることになるでしょう。
 
-<span class="csscript"></span>
+
 
     if typeof aVar isnt "undefined"
       objectType = type(aVar)
@@ -286,7 +284,7 @@ CoffeeScriptはJavaScriptのいくつかの欠点を無くしましたが、他�
 As an alternative to type checking, you can often use duck typing and the CoffeeScript existential operator together to eliminating the need to resolve an object's type. For example, let's say we're pushing a value onto an array. We could say that, as long as the 'array like' object implements `push()`, we should treat it like an array:
 型チェックの代わりに、しばしばダックタイピングとCoffeeScriptの存在確認演算子を一緒に用いることでオブジェクトの型を解く必要を無くすことが可能です。例として、配列に値をプッシュするとしましょう。こう言うことができます。「もし`array`であるかのようなオブジェクトが`push()`を実装しているのであれば、それを配列として扱うべきだろう。」
 
-<span class="csscript"></span>
+
 
     anArray?.push? aValue
     
@@ -296,14 +294,14 @@ As an alternative to type checking, you can often use duck typing and the Coffee
 
 JavaScriptの`instanceof`キーワードは`typeof`のようにほとんど壊れています。理想的には`instanceof`は2つのオブジェクトのコンストラクタを比較し、一方が他方のインスタンスであるかの真偽値を返すはずです。しかし実際には`instanceof`はカスタムメイドのオブジェクトを比較する場合のみ、うまく動作します。ビルトインタイプを比較する場合には`typeof`と同じように使いものになりません。
 
-<span class="csscript"></span>
+
 
     new String("foo") instanceof String # true
     "foo" instanceof String             # false
     
 さらに`instanceof`はまた、ブラウザの異なるフレームからのオブジェクトを比較する場合に動作しません。実際に`instanceof`はカスタムメイドのオブジェクトに対してのみ正しい結果を返します。例えばCoffeeScriptのクラスです。
 
-<span class="csscript"></span>
+
 
     class Parent
     class Child extends Parent
@@ -318,7 +316,7 @@ JavaScriptの`instanceof`キーワードは`typeof`のようにほとんど壊�
 
 `delete`キーワードはオブジェクトの中のプロパティを消去する場合にだけ安全に使用可能です。
 
-<span class="csscript"></span>
+
 
     anObject = {one: 1, two: 2}
     delete anObject.one
@@ -326,7 +324,7 @@ JavaScriptの`instanceof`キーワードは`typeof`のようにほとんど壊�
 
 他のどんな使用も、例えば変数や関数を消す場合はうまくいきません。
 
-<span class="csscript"></span>
+
 
     aVar = 1
     delete aVar
@@ -334,7 +332,7 @@ JavaScriptの`instanceof`キーワードは`typeof`のようにほとんど壊�
 
 とても奇妙な挙動ですが、とにかく動作はしました。もし変数への参照を消したいのであれば、ただ代わりに`null`を代入しましょう。
 
-<span class="csscript"></span>
+
 
     aVar = 1
     aVar = null
@@ -392,7 +390,7 @@ CoffeeScriptは既にストリクトモードの要求の多くを遵守して�
 
 ストリクトモードを使用するのに必要なことはスクリプトや関数を次の文字列で開始するだけです。
 
-<span class="csscript"></span>
+
     
     ->
       "use strict"
@@ -401,7 +399,7 @@ CoffeeScriptは既にストリクトモードの要求の多くを遵守して�
       
 これで全てです。`'use strict'`で始めるだけです。これ以上簡単にならないくらいですし、後方互換性も完璧にあります。実際にストリクトモードを見てみましょう。次の関数はストリクトモードではシンタックスエラーを上げます。しかし通常のモードでは問題なく動作します。
 
-<span class="csscript"></span>
+
 
     do ->
       "use strict"
@@ -411,7 +409,7 @@ CoffeeScriptは既にストリクトモードの要求の多くを遵守して�
 
 ストリクトモードを用いる場合に注意すべき心得があります。グローバル変数を作るときに`this`を用いる場合です。次の例は`TypeError`をストリクトモードでは投げます。しかし通常のコンテキストでは問題なく動作し、グローバル変数を作ります。
 
-<span class="csscript"></span>
+
 
     do ->
       "use strict"
@@ -419,7 +417,7 @@ CoffeeScriptは既にストリクトモードの要求の多くを遵守して�
       
 裏側にあるこの違いの理由はストリクトモードでは`this`が`undefined`であるためです。通常では`window`オブジェクトを参照します。この問題の解決法は明示的に外部変数を`window`オブジェクトに対し設定することです。
 
-<span class="csscript"></span>
+
 
     do ->
       "use strict"

@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引へ戻る</a></div>
-
 #CoffeeScriptって何?
 
 [CoffeeScript](http://coffeescript.org)はJavaScriptにコンパイルできる小さな言語です。文法がRubyとPythonに影響を受けていてそれらの2つの言語の多くの機能を実装しています。この本はあなたがCoffeeScriptを学習し、ベストプラクティスを理解し、優れたクライアントサイドアプリケーションの開発を開始するのを手助けします。この本は小さく、5章しかありません。しかしそれは適切なことでしょう！CoffeeScriptもまた小さな言語ですから。

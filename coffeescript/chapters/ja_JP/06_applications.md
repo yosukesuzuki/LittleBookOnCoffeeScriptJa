@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引に戻る</a></div>
-
 #アプリケーションを作成する
 
 ここまでで文法の概要について学びました。ここからは実際にCoffeeScriptアプリケーションを構築しましょう。この章の狙いは初心者や熟練の技術者に限らず、全てのCoffeeScript開発者にとって有益なものになることです。本当に、JavaScriptの開発者にとっても適切なものとなるはずです。
@@ -53,7 +51,7 @@
 
 それではStichサーバを実際に起動します。`index.coffee`という名のファイルを作り、次のスクリプトを入力してください。
 
-<span class="csscript"></span>
+
 
     require("coffee-script")
     stitch  = require("stitch")
@@ -105,7 +103,7 @@ OK.もうそこまで来ました。それでは次を実行します。
     
 うまくいけばStitchサーバが立ち上がるでしょう。それでは先に進み`app`フォルダの中の`app.coffee`スクリプトを与えてテストしてみましょう。このファイルは私達のアプリケーションを起動するものになります。
 
-<span class="csscript"></span>
+
 
     module.exports = App =
       init: ->
@@ -133,7 +131,7 @@ OK.もうそこまで来ました。それでは次を実行します。
 
 ページがロードされた時、*DOMContentLoaded*イベントコールバックは`app.coffee`スクリプトをrequireします。(それは自動的にコンパイルされます。) 次に`init()`関数を実行します。あるべきものはそれだけです。私達は既にCommonJSモジュールを起動して実行しています。HTTPサーバとCoffeeScriptコンパイラもです。例えばもしモジュールをインクルードしたい場合、`require()`を呼ぶだけです。新しいクラス、`user`を作り、`app.coffee`から参照してみましょう。
 
-<span class="csscript"></span>
+
 
     # app/models/user.coffee
     module.exports = class User
@@ -190,13 +188,13 @@ JavaScriptテンプレートはサーバサイドのそれと似たようなも�
     
 Stichは自動的に私達のテンプレートをコンパイルして`application.js`に含めてしまいます。そして私達のアプリケーションのコントローラではテンプレートをrequireすることがモジュールのように可能で、必要なデータを渡して実行することができます。
     
-<span class="csscript"></span>
+
 
     require("views/users/show")(new User("Brian"))
     
 私達の`app.coffee`ファイルは以下のようになっているはずです。テンプレートを描画し、ドキュメントがロードされた時にページに対して追加します。
 
-<span class="csscript"></span>
+
 
     User = require("models/user")
 

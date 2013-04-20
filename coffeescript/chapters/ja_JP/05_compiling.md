@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引に戻る</a></div>
-
 #自動的にCoffeeScriptをコンパイルする
 
 CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増やすことです。CoffeeScriptのファイルが変更され、古くなる度に手動でコンパイルせねばなりません。幸いなことにCoffeeScriptはいくつかのコンパイル代替形態を持っており、開発サイクルをいくらかスムーズにすることが可能です。
@@ -18,7 +16,7 @@ CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増�
 
 タスクは`task()`関数を用いて定義します。名前と任意で詳細説明とコールバック関数を与えます。例として`Cakefile`という名のファイルを作り、`lib`と`src`という2つのディレクトリを作成してください。`Cakefile`には次の内容を追加します。
 
-<span class="csscript"></span>
+
 
     fs = require 'fs'
 
@@ -39,7 +37,7 @@ CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増�
       
 上の例では`build`というタスクを定義しました。`cake build`で実行できます。これは先の例と同じコマンドを実行し`src`にあるCoffeeScriptファイルを全てJavaScriptにコンパイルし、`lib`に置きます。これでHTMLファイルから通常どおりに`lib`の中にあるJavaScriptファイルを参照できます。
 
-<span class="csscript"></span>
+
 
     <!DOCTYPE html>
     <html>
@@ -53,7 +51,7 @@ CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増�
 
 これではまだ`cake build`をCoffeeScriptのコードを変更するたびに手動で実行せねばなりません。理想からは遠いです。幸運なことに、`coffee`コマンドは別のオプションがあります。`--watch`はコマンドにディレクトリに対して変更を見張るように指示し、必要な場合にはリコンパイルします。それを用いて別のタスクを定義しましょう。
 
-<span class="csscript"></span>
+
 
      task 'watch', 'Watch src/ for changes', ->
         coffee = spawn 'coffee', ['-w', '-c', '-o', 'lib', 'src']
@@ -64,7 +62,7 @@ CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増�
 
 もしあるタスクが別のタスクに依存する場合、別のタスクを`invoke(name)`を用いて実行すらことが可能です。`Cakefile`にもう一つ便利なタスクを追加しましょう。`index.html`を開きソースの変更の見張りを開始します。
 
-<span class="csscript"></span>
+
 
     task 'open', 'Open index.html', ->
       # 最初に開いて、次に見張る
@@ -73,7 +71,7 @@ CoffeeScriptの問題はあなたとJavaScriptの間に他のレイヤーを増�
 
 タスクには`option()`関数を用いてオプションを定義することが可能です。引数として短かい名前、長い名前、そして説明を渡せます。
 
-<span class="csscript"></span>
+
 
     option '-o', '--output [DIR]', 'output dir'
 

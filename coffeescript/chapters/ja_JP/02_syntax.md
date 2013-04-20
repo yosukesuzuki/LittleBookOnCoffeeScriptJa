@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引に戻る</a></div>
-
 #CoffeeScriptの文法
 
 最初にこのセクションを始める前に再確認しておきましょう。CoffeeScriptの文法はしばしばJavaScriptと同じですが拡張ではありません。従っていくらかのJavaScriptのキーワード、例えば`function`や`var`は許されません。文法エラーになります。CoffeeScriptのファイルを書くのであれば純粋にCoffeeScriptである必要があります。2つの言語を混ぜることはできません。
@@ -17,7 +15,7 @@
 複数行のコメントもまたサポートされており、生成されたJavaScriptに適用されます。3つのシャープで括ります。
 
 
-<span class="csscript"></span>
+
 
     ###
       複数行のコメント。たぶん、ライセンス
@@ -30,7 +28,7 @@
 
 CoffeeScriptはJavaScriptの主な問題の1つを直しました。グローバル変数です。JavaScriptでは変数宣言の前に`var`を置くのを忘れてしまったために不本意にグローバル変数を宣言してしまうことが頻繁でした。CoffeeScriptはこれを単純にグローバル変数を無くすことで解決しています。裏側ではCoffeeScriptはスクリプトを無名関数でラップすることでローカルコンテキストを保持しています。そして自動的に全ての変数宣言に`var`を付けています。例えば次の単純な変数の割当をご覧下さい。
 
-<span class="csscript"></span>
+
 
     myVariable = "test"
 
@@ -40,7 +38,7 @@ CoffeeScriptはJavaScriptの主な問題の1つを直しました。グローバ
 
 しかしながら、時々、グローバル変数を作ることは便利な事です。グローバルオブジェクト(ブラウザでは`window`)のプロパティとして直接設定するか、次のパターンを用いることで可能です。
 
-<span class="csscript"></span>
+
 
     exports = this
     exports.MyVariable = "foo-bar"
@@ -53,7 +51,7 @@ CoffeeScriptはとても冗長なfunction文を削除しました。そしてそ
     
 そのことを頭に入れて、次の例を見てみましょう:
     
-<span class="csscript"></span>
+
 
     func = -> "bar"
 
@@ -61,7 +59,7 @@ CoffeeScriptはとても冗長なfunction文を削除しました。そしてそ
 
 先程お話しましたとおり、複数行を問題無く使うことができます。ただし適切に関数の本体をインデントする必要があります。
 
-<span class="csscript"></span>
+
 
     func = ->
       # 余分な行
@@ -71,19 +69,19 @@ CoffeeScriptはとても冗長なfunction文を削除しました。そしてそ
 
 引数はどうやって指定するのでしょうか？CoffeeScriptでは矢印の前で、括弧の中に引数を指定します。
 
-<span class="csscript"></span>
+
 
     times = (a, b) -> a * b
 
 CoffeeScriptはデフォルト引数もサポートします。例えば：
 
-<span class="csscript"></span>
+
 
     times = (a = 1, b = 2) -> a * b
     
 また可変長引数を利用するのにスプラットを用いることも可能です。`...`の名称です。
 
-<span class="csscript"></span>
+
 
     sum = (nums...) -> 
       result = 0
@@ -92,7 +90,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 上の例では`nums`は関数に渡された全ての引数の配列です。これは`arguments`オブジェクトではありません。そうではなく本物の配列です。だからこれを取り扱うのに`Array.prototype.splice`や`jQuery.makeArray()`の使用をあなた自身で考慮する必要がありません。
 
-<span class="csscript"></span>
+
 
     trigger = (events...) ->
       events.splice(1, 0, this)
@@ -102,7 +100,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 関数はJavaScriptと全く同じように実行することが可能です。括弧`()`を付けたり、`apply()`を適用したり、`call()`を呼んだりです。しかしRubyのように、CoffeeScriptは関数が最低一つの引数と実行されれば、自動的に関数を呼出します。
 
-<span class="csscript"></span>
+
 
     a = "Howdy!"
     
@@ -116,7 +114,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
     
 括弧は必須ではありませんが、直ぐに何がどんな引数と実行されるか明らかに判る場合以外は使用することをお勧めします。`inspect`を用いる最後の例では、私は最低でも`inspect`の実行には括弧を付けることを強くお勧めします。
 
-<span class="csscript"></span>
+
 
     alert inspect(a)
 
@@ -128,7 +126,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 細い矢印の代わりにファットアローを用いることで、関数のコンテキストがローカルのものに紐付けられることを確実にします。以下の例をご覧下さい。
 
-<span class="csscript"></span>
+
 
     this.clickHandler = -> alert "clicked"
     element.addEventListener "click", (e) => this.clickHandler(e)
@@ -141,7 +139,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 オブジェクト構文はJavaScriptと全く同じように指定可能です。中括弧のペアやキー/バリューの文を使います。しかし関数実行と同じように、CoffeeScriptは中括弧を省略可能です。実際に、インデントをまた使うことが可能ですし、改行をカンマの変わりに用いることができます。
 
-<span class="csscript"></span>
+
 
     object1 = {one: 1, two: 2}
 
@@ -157,7 +155,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 同様に、配列は空白をカンマの代わりに区切に用いることができます。ただし角括弧(`[]`)は必須です。
 
-<span class="csscript"></span>
+
 
     array1 = [1, 2, 3]
 
@@ -175,7 +173,7 @@ CoffeeScriptはデフォルト引数もサポートします。例えば：
 
 CoffeeScriptの括弧が必須でないというお約束は`if`と`else`キーワードでも続きます。
 
-<span class="csscript"></span>
+
 
     if true == true
       "We're ok"
@@ -190,26 +188,26 @@ CoffeeScriptの括弧が必須でないというお約束は`if`と`else`キー�
 
 CoffeeScriptはまたRubyの慣用句である後置`if`文を利用可能です。
 
-<span class="csscript"></span>
+
 
     alert "It's cold!" if heat < 5
 
 否定にびっくりマーク(`!`)を用いる代わりに、`not`キーワードを用いることが可能です。それを用いることでコードをより読み易くすることが可能です。びっくりマークは簡単に見落としますから。
 
-<span class="csscript"></span>
+
 
     if not true then "Panic"
     
 上の例ではCoffeeScriptの`unless`文を`if`の反対として使用可能です。
 
-<span class="csscript"></span>
+
 
     unless true
       "Panic"
 
 `not`と似た感覚で、CoffeeScriptは`is`文も持っています。`===`に変換されます。
 
-<span class="csscript"></span>
+
 
     if true is 1
       "Type coercion fail!"
@@ -226,7 +224,7 @@ You may have noticed in the examples above, that CoffeeScript is converting `==`
 
 CoffeeScriptはRuby式の文字列への挿入をJavaScriptに対し追加しています。ダブルクォートで括った文字列に対しては`#{}`タグを含むことができます。その中に文字列に対して挿入される式を記述します。
 
-<span class="csscript"></span>
+
 
     favourite_color = "Blue. No, yel..."
     question = "Bridgekeeper: What... is your favourite color?
@@ -240,41 +238,41 @@ CoffeeScriptはRuby式の文字列への挿入をJavaScriptに対し追加して
 
 JavaScriptの配列の繰り返しはとても古風な文法でした。C言語のようなより古い言語を思い出させ、現在のオブジェクト指向言語とは異なります。ES5の`forEach()`の登場により状況はいくらか改善されました。しかしそれでも毎回関数呼出を必要とし、そのために遅いものとなっています。再びCoffeeScriptが美しい文法でその助けとなります。
 
-<span class="csscript"></span>
+
 
     for name in ["Roger", "Roderick", "Brian"]
       alert "Release #{name}"
       
 もし繰り返しのインデックスが必要なら、もう1つの引数を渡すだけです。
       
-<span class="csscript"></span>
+
 
     for name, i in ["Roger the pickpocket", "Roderick the robber"]
       alert "#{i} - Release #{name}"
 
 後置形式を用いることで1行で繰返すことも可能です。
 
-<span class="csscript"></span>
+
 
     release prisoner for prisoner in ["Roger", "Roderick", "Brian"]
     
 Pythonの内包表記のように、フィルタリングを行うことも可能です。
 
-<span class="csscript"></span>
+
 
     prisoners = ["Roger", "Roderick", "Brian"]
     release prisoner for prisoner in prisoners when prisoner[0] is "R" 
 
 内包表記を用いてオブジェクトのプロパティについて繰り返しを行うことも可能です。`in`キーワードの代わりに`of`を使用して下さい。
 
-<span class="csscript"></span>
+
 
     names = sam: seaborn, donna: moss
     alert("#{first} #{last}") for first, last of names
 
 CoffeeScriptが持つローレベルなループは`while`のみです。JavaScriptの`while`と同じような動作をします。しかし追加の利点として結果の配列を返します。つまり`Array.prototype.map()`関数と同じようにです。
 
-<span class="csscript"></span>
+
 
     num = 6
     minstrel = while num -= 1
@@ -284,32 +282,32 @@ CoffeeScriptが持つローレベルなループは`while`のみです。JavaScr
 
 CoffeeScriptは配列の範囲(region)を用いたスライスについてRubyからヒントを得ています。範囲は2つの数値から作られます。最初と最後の位置を示す2つの数値は`..`か`...`で区切られます。もし範囲の前に何も無い場合にはCoffeeScriptはそれを配列に変換します。
 
-<span class="csscript"></span>
+
 
     range = [1..5]
     
 しかし、もし範囲が変数の直後に置かれたならCoffeeScriptはそれを`slice()`メソッドの呼出に変換します。
     
-<span class="csscript"></span>
+
 
     firstTwo = ["one", "two", "three"][0..1]
     
 上の例では範囲は新しい配列を返します。元の配列の最初の2つの要素のみを持つ配列です。同じ文法を配列の一部を他の配列で置換することにも使えます。
 
-<span class="csscript"></span>
+
 
     numbers = [0..9]
     numbers[3..5] = [-3, -4, -5]
 
 便利なのはJavaScriptでは`slice()`を文字列に対しても呼ぶことが可能なことです。そのため範囲を文字列に対して使用することで部分文字列を返すことが可能です。
     
-<span class="csscript"></span>
+
 
     my = "my string"[0..2]
 
 JavaScriptでは配列の中に値が存在するか確認することはとても面倒でした。特に`indexOf()`が全てのブラウザ間においてサポートされている訳ではなかったからです。(IE、君のことを言っているんだよ)。CoffeeScripitはこれを`in`演算子で解決します。次の例をご覧下さい。
 
-<span class="csscript"></span>
+
 
     words = ["rattled", "roudy", "rebbles", "ranks"]
     alert "Stop wagging me" if "ranks" in words 
@@ -318,36 +316,36 @@ JavaScriptでは配列の中に値が存在するか確認することはとて�
 
 CoffeeScriptはいくつかの便利なエイリアスをタイピングの量を減らすために利用できます。そのうちの1つは`@`です。これは`this`のエイリアスです。
 
-<span class="csscript"></span>
+
 
     @saviour = true
     
 もう1つは`::`です。これは`prototype`の別名です。
 
-<span class="csscript"></span>
+
 
     User::first = -> @records[0]
     
 JavaScriptでは`if`を`null`チェックに用いることは普通です。しかし空文字列と0が共に`false`に変換されることが落とし穴として存在し、あなたを陥れます。CoffeeScriptの存在確認演算子である`?`は変数が`null`でないか、`undefined`でなければtrueを返します。Rubyの`nil?`と同様です。
 
-<span class="csscript"></span>
+
 
     praise if brian?
     
 これは`||`演算子の代わりにも使えます。
 
-<span class="csscript"></span>
+
 
     velocity = southern ? 40
     
 もし`null`チェックをプロパティにアクセスする前に行う場合、存在確認演算子をその前に置くだけでスキップすることが可能です。これはActive Supportの[`try`](http://guides.rubyonrails.org/active_support_core_extensions.html#try)メソッドに似ています。
 
-<span class="csscript"></span>
+
 
     blackKnight.getLegs()?.kick()
     
 同様に、プロパティが実際に関数であり呼出可能かチェックすることが括弧の直前に存在確認演算子を置くことで可能です。もしプロパティが存在しないか、関数ではない場合、呼出は行われません。
 
-<span class="csscript"></span>
+
 
     blackKnight.getLegs().kick?()

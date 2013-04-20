@@ -1,5 +1,3 @@
-<div class="back"><a href="index.html">&laquo; 索引に戻る</a></div>
-
 #CoffeeScriptに共通なイディオム
 
 各言語には慣用句や慣習があります。CoffeeScriptも例外ではありません。この章ではそれらの規約を説明し、JavaScriptとCoffeeScriptの比較をいくつかご紹介することでこの言語の実践的なセンスを得て頂きます。
@@ -17,7 +15,7 @@ JavaScriptでは配列の全てのアイテムに対し繰返しを行う場合�
 
 `forEach()`の文法は簡潔で読み易いものですが、配列の個々の繰り返しにおいてコールバック関数が実行されるための不利益を被ります。つまり同等な`for`ループに比べると遅くなります。CoffeeScriptではどうなるか見てみましょう。
 
-<span class="csscript"></span>
+
       
     myFunction(item) for item in array
     
@@ -37,7 +35,7 @@ JavaScriptでは配列の全てのアイテムに対し繰返しを行う場合�
 
 文法の章で説明したとおり、CoffeeScriptの内包表記は`map()`と同じ処理を行うことが可能です。内包表記を括弧で囲んでいることに注意して下さい。それはあなたが期待したmapを実行した結果配列を得ることを確実にするのに**とても重要**です。
 
-<span class="csscript"></span>
+
 
     result = (item.name for item in array)
 
@@ -56,14 +54,14 @@ JavaScriptでは配列の全てのアイテムに対し繰返しを行う場合�
 
 CoffeeScriptの基本的文法は`when`キーワードをアイテムを比較しながらフィルタリングするのに用います。裏側では`for`ループが生成されています。実行の全体は無名関数の中で行なわれ、スコープが漏れることや変数名の衝突を防ぎます。
 
-<span class="csscript"></span>
+
 
     result = (item for item in array when item.name is "test")
 
 括弧を絶対に忘れないで下さい。でなければ`result`は配列の最後の要素になるでしょう。
 CoffeeScriptの内包表記はとても自由度が高く次の例のようにとても強力な選択を行うことを可能にします。
 
-<span class="csscript"></span>
+
 
     passed = []
     failed = []
@@ -74,7 +72,7 @@ CoffeeScriptの内包表記はとても自由度が高く次の例のように�
     
 もし内包表記が長すぎる場合には複数行に分けることが可能です。
 
-<span class="csscript"></span>
+
 
     passed = []
     failed = []
@@ -89,18 +87,18 @@ CoffeeScriptの内包表記はとても自由度が高く次の例のように�
 
 CoffeeScriptはPythonプログラマなら気付くであろうこれに対する素敵な代替法を持っています。つまり`in`です。
 
-<span class="csscript"></span>
+
     
     included = "test" in array
 
 裏側ではCoffeeScriptは配列の中に値があるかを確認するのに`Array.prototype.indexOf()`を使用しています。そしてもし必要ならその代替を利用しています。残念なことですがこれは同じ`in`という文法が文字列に対しては動作しないことを意味します。`indexOf()`を使う方法に戻って、結果が`-1`でないか確認します。
 
-<span class="csscript"></span>
+
 
     included = "a long test string".indexOf("test") isnt -1
 
 またはより良い方法として、ビット演算をハイジャックして`-1`との比較をしなくてもすむようにします
-<span class="csscript"></span>
+
     
     string   = "a long test string"
     included = !!~ string.indexOf "test"
@@ -114,7 +112,7 @@ JavaScriptでプロパティの塊について繰返す場合には`in`演算子
     
 しかし、前のセクションで見たとおり、CoffeeScriptは既に`in`を配列に用いるのに予約済みです。その代わりに、演算子は`of`と名前を変えこのように使えます。
 
-<span class="csscript"></span>
+
     
     object = {one: 1, two: 2}
     alert("#{key} = #{value}") for key, value of object
@@ -125,7 +123,7 @@ JavaScriptでプロパティの塊について繰返す場合には`in`演算子
 
 このテクニックはCoffeeScript特有のものではありません。しかし便利なのでとにかく紹介してみましょう。`Math.max`と`Math.min`は複数の引数を取ります。そのため`...`を用いることで配列を渡し、配列の中の最大値と最小値を得ることができます。
 
-<span class="csscript"></span>
+
 
     Math.max [14, 35, -7, 46, 98]... # 98
     Math.min [14, 35, -7, 46, 98]... # -7
@@ -136,7 +134,7 @@ JavaScriptでプロパティの塊について繰返す場合には`in`演算子
 
 上の`Math.max`の例では`...`を使い配列を解体し複数の引数として`max`に渡しました。裏側ではCoffeeScriptは関数呼出を`apply()`を使うように変換し、配列が複数の引数として`max`に渡るようにしています。この機能を他にも使うことが可能です。例えば関数呼出を委任(proxy)するには次のようにします。
 
-<span class="csscript"></span>
+
 
     Log =
       log: ->
@@ -144,7 +142,7 @@ JavaScriptでプロパティの塊について繰返す場合には`in`演算子
       
 または引数をパスする前に変えてしまうことも可能です。
 
-<span class="csscript"></span>
+
 
     Log =
       logPrefix: "(App)"
@@ -161,7 +159,7 @@ CoffeeScriptスタイルガイドは`or`は`||`より好ましく、`and`は`&&`
 
 このより英語らしいスタイルという優先度は`==`の代わりに`is`、`!=`の代わりに`isnt`ということにも当て嵌ります。
     
-<span class="csscript"></span>
+
 
     string = "migrating coconuts"
     string == string # true
@@ -169,13 +167,13 @@ CoffeeScriptスタイルガイドは`or`は`||`より好ましく、`and`は`&&`
     
 CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これはRuby使いなら`||=`と認識するでしょう。
     
-<span class="csscript"></span>
+
 
     hash or= {}
     
 もしhashが`false`と評価されるならそれには空のオブジェクトが代入されます。ここで重要なのはこの式は`0`、`""`、`null`もまたfalseと判定することです。もしそれがあなたの意図することでなければCoffeeScriptの存在確認演算子を用いるべきでしょう。そちらは`hash`が`undefined`であるか`null`である場合のみ作動します。
 
-<span class="csscript"></span>
+
 
     hash ?= {}
 
@@ -183,7 +181,7 @@ CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これ�
 
 割当の解体は任意の深さの配列とオブジェクトのネストに用いられ、奥にネストされたプロパティを取り出すのを手助けします。
 
-<span class="csscript"></span>
+
 
     someObject = { a: 'value for a', b: 'value for b' }
     { a, b } = someObject
@@ -191,7 +189,7 @@ CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これ�
     
 これはNodeのアプリケーションにおいてモジュールを必要とする場合に特に有効です。
 
-<span class="csscript"></span>
+
 
     {join, resolve} = require('path')
     
@@ -201,7 +199,7 @@ CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これ�
 
 外部ライブラリを利用することはCoffeeScriptのライブラリの関数を呼ぶのと全く同じです。なぜなら全ては最後にはJavaScriptへとコンパイルされるからです。CoffeeScriptと[jQuery](http://jquery.com)を同時に利用するのは特にエレガントです。jQueryのAPIには大量のコールバックがあるからです。
 
-<span class="csscript"></span>
+
 
     # ローカルの別名を使う
     $ = jQuery
@@ -217,7 +215,7 @@ CoffeeScriptへのとても嬉しい拡張の1つは`or equals`です。これ�
 
 CoffeeScriptの`do`キーワードは関数を直ぐに実行しますが、スコープをカプセル化し、変数を守るのに最高の方法です。下の例では、`classToType`という変数を無名関数のコンテキストで定義し、`do`により直ぐに実行しています。その無名関数は2つ目の無名関数を返します。
 
-<span class="csscript"></span>
+
 
     # 関数をすぐに実行する
     type = do ->
